@@ -6,7 +6,8 @@ Contents
 ---
   * [Preface](#preface)
   * [Server](#server)
-  * [Configurar .gitignore](#gitignore)
+  * [Docker](#docker)
+  * [App](#app)
   
 
 <div id='preface'/>
@@ -49,8 +50,16 @@ At first it had Windows 8 OS, but for the purpose of this app, i deleted it and 
 
 ### Installing OS system
 
-[to do]  
+First, there are a couple of things we need before installing the OS System. We need an empty pendrive (because when burning the image, it's gonna delete everything), and an image burner.  
+The next step is choosing which OS to use. In this case I am using Ubuntu Server 22.04 (image), because it's one of the most used versions, and a good place where to start, with a lot of documentation in the internet. Probably, one of the next projects will run in proxmox or red hat linux.  
 
+Because I am gonna burn the image using the application Rufus. When executing Rufus, it will automatically detect the pendrive, select the image previously downloaded (Ubuntu 22.04 in my case) and leave the variables as they are. Burn the image as ISO (in case there's an error try DD). Once it's done, close and release the pendrive.  
+
+Insert the pendrive in our wannabe server, turn it on and press *esc* to access the laptop menu. There it will show you the different options. Click on the key associated to the **BIOS**, in my case F10. Make your way to **System Configuration** to the option **Boot Options**. From there go to **Legacy Support** and enable it. Once done, go to **UEFI Boot Order** and make the option of **USB on Diskette on Key/USB Hard Disk** on top of everything with the key F6. The same has to be done in the options for **Legacy Boot Order**. Save and exit. From there it will show on screen to insert some numbers to confirm changes. Insert the code and click *Enter*.  
+
+The laptop will reboot. Keep click *Esc* to enter the menu of the laptop. Now select the option **Boot Device Option** (F9 in my case). Then select the option of our pendrive without UEFI part, because so far we have done the changes in the Legacy Mode (if this doesn't work, select the with UEFI).
+
+Then Ubuntu Server 22.04 will boot, when it suggests what packages you want installed, I recommend to select: ssh, docker and kubernetes if you have the option.
 
 ### Installing dependencies
 Because i was stupid, i didnt install docker at the start where it asks you if you want it pre-installed, but i declined.
@@ -137,7 +146,7 @@ systemctl restart systemd-logind
 
 ### Creating virtual machines
 To create the virtual machines in the server, we are gonna use `Multipass`. Multipass is a lightweight VM manager for linux, etc. 
-Since it supports metadata for cloud-init, you can simulate a small cloud deployment on your laptop or workstation. The installation is pretty easy. (Probably in the next project, i will change everything to proxmox or red hat linux).
+Since it supports metadata for cloud-init, you can simulate a small cloud deployment on your laptop or workstation. The installation is pretty easy. 
 
 ```bash
 sudo snap install multipass
@@ -202,7 +211,19 @@ kubectl get nodes
 The output should look like this:
 ![ls-config-file](/imgs/firstTime-get-nodes.png)
 
+Normally, we wouldn't want our workloads running on the master node and use taints and tolerations to make sure pods are scheduled only on a worker node. In our case, since the setup is not HA (High Available) due to hardware resource constraints, we are going to allow pods scheduling on a master node.
 
 
 
+<div id='docker'/>
 
+
+## Docker
+To containeraze the application in kubernetes, we are gonna use Docker. For that we need to create a Dockerfile. 
+
+
+
+<div id='app'/>
+
+
+## App
