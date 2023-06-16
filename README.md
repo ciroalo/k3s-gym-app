@@ -214,9 +214,85 @@ The output should look like this:
 Normally, we wouldn't want our workloads running on the master node and use taints and tolerations to make sure pods are scheduled only on a worker node. In our case, since the setup is not HA (High Available) due to hardware resource constraints, we are going to allow pods scheduling on a master node.
 
 
+### Set Up Load Balancer
+The set up so far consists of bare metal server with 2 VM's on it. To establish traffic between the host PC, and the kubernetes cluster, we need to make sure that all requests sent to the server are forwarded to the Kubernetes master IP, or our k3s-server.  
+To make this possible, we will use nginx and replace the default config with load balancing to our cluster. 
+
+```bash
+sudo apt install nginx
+```
+
+Go to the directory:
+```bash
+cd /etc/ngnix/
+```
+
+And edit the next file to include:
+```bash
+sudo "${EDITOR:-vi}" nginx.conf
+```
+
+```
+events {}
+stream {
+  upstream k3s_servers {
+    server ${K3S_NODEIP_SERVER}:6443;
+  }
+  server {
+    listen 6443;
+    proxy_pass k3s_servers;
+  }
+}
+EOF
+```
+
+If there's another events{} variable with information, comment it with #.Replace ${K3S_NODEIP_SERVER} with the appropiate ip.
+
+### Download Kubeconfig file
+To connect from our home PC to the kubernester master, we have to download the kubeconfig file from the server in the home PC and merge it with the kubeconfig file in our home pc.    
+
+
+The first step is to make sure we have downloaded kubectl in our home PC, if not, it's as simple as following the next commands:  
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+```
+```bash
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+```
+
+```bash
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+```
+
+```bash
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+After that, we are gonna download the kubeconfig file from the master k3s.
+Login to the k3s-server vm:
+
+### Adding admin user to the server
+This is a step I forgot to take before as you don't want to try and run some 
+commands as a root user. For that we are gonna create a admin user with sudo 
+permissions. This command works in Ubuntu Server, in other OS it has probably
+ another name.
+
+```bash
+adduser <user-name>
+```
+
+After creating this user, we want it to have sudo permissions. For that we are
+gonna add the user to the sudo group 
+
+```bash
+adduser <user-name> sudo  
+```
+
+To finish, we will have to log out of the ssh session as the root user, and
+start a new one with the new user created.
+
 
 <div id='docker'/>
-
 
 ## Docker
 To containeraze the application in kubernetes, we are gonna use Docker. For that we need to create a Dockerfile. 
