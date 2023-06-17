@@ -303,3 +303,34 @@ To containeraze the application in kubernetes, we are gonna use Docker. For that
 
 
 ## App
+
+### Create virtual environment
+
+As starting point, I'm creating a simple python flask app to test the functionality of the server, 
+docker container and the app. It will be just a simple HelloWorld app.
+
+To start with the project, we are gonna create a virtual environment in our local machine that will only have all the neccessary 
+packages to run the app. Later, we will save all of this packages in a requirements.txt so that when creating the docker, 
+we can just download all the packages with their respective versions.
+
+To create a virtual environment in linux we can just make use of `virtualenv`. If you don't have it installed 
+you can install it with the command
+
+```bash 
+sudo apt install python3-virtualenv
+```
+
+After successful installation we can create our virtual environment with:
+
+```bash
+virtualenv <venv_name>
+```
+
+In my case I called mine `env`, but normally it would be called `venv`, but it could be called anything.
+
+To activate it, you just have to run the command:
+
+```bash
+source <venv_name>/bin/activate
+```
+
