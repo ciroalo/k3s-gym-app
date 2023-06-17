@@ -10,5 +10,4 @@ Right now, this version doesn't have any security policy.
 
 ## Reporting a Vulnerability
 
-When a vulnerability breach if found, and you want to report to me, don't. Hahaha, I'm joking. I am always happy to get better at coding, and learning new ways, right 
-now I am a rookie just trying to find the ways of programming.
+When a vulnerability breach if found, and you want to report to me, don't. Hahaha, I'm joking. I am always happy to get better at coding, and learning new ways, right now I am a just rookie trying to find the ways of programming.
