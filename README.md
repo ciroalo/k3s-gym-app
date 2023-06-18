@@ -334,3 +334,60 @@ To activate it, you just have to run the command:
 source <venv_name>/bin/activate
 ```
 
+### Create simple Flask App
+
+Now we are gonna create our simple HelloWorld app in Flask. You can check out the file `hello.py` that will contain 
+all the neccessary code.
+
+
+```python3
+app = Flask(__name__)
+```
+
+
+We will start by creating our Flask application instance with the name app. You pass the special variable `__name__` 
+that holds the name of the current Python module. It's used to tell the instance where it is located, you will need
+this because Flask sets up some paths behind the scenes.
+
+After creating the app instance, you use it to handle incoming web requests and send responses to the user. `@app.route`
+is a [decorator](https://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators) that turns a regular python
+function into a Flask view function. Which converts the function return value into an HTTP response to be displayed 
+by the HTTP client, such as a web browser. In this case, we pass the `'/'` to `@app.route()` to signify that this 
+function will responde to web requests for the URL `/`, which mean the base case or main url.
+
+The function `hello()` will return the 'Hello World!!!!' as a response.
+
+
+To run the web application, we first need to tell Flask where to find our app (the hello.py file in this case) with the
+`FLASK_APP` environment variable.
+
+```bash
+export FLASK_APP=hello
+```
+
+To run it in development mode:
+
+```bash
+export FLASK_ENV=development
+```
+
+For last we just need to run the application using the command:
+
+```bash
+flask run
+```
+
+The commands and outputs should look like this:
+
+![flask_hello_terminal](/imgs/flask_hello_terminal.png)
+
+![flask_hello_web](/imgs/flask_hello_web.png)
+
+The app is running locally on the URL `http://127.0.0.1:5000/`. The ip `127.0.0.1` represents
+your machines localhost and `5000` is the port number. To run the app in another port number
+we can just run the app with:
+
+```bash 
+flask run -p <port_number>
+```
+
