@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> {% block title %} {% endblock %} Lab </title>
+
+        <!-- Add the neccesary css styles and links -->
+        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style_hello.css') }}">
+    </head>
+    <body>
+        <article>
+            <p>{% block content%} {% endblock %}</p>
+        </article>
+
+        <footer>
+            <p> Ciro Alonso Aquino ciro.alonso@estudiante.uam.es </p>
+        </footer>
+    </body>
+</html>

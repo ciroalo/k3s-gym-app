@@ -391,3 +391,50 @@ we can just run the app with:
 flask run -p <port_number>
 ```
 
+
+### Flask templates
+
+Now we are gonna add some templates to the web app. Before, the app was returning a response 
+without any HTML. Web Applications mainly use HTML to display information, so now we are gonna
+incorporate those elements in our app.  
+
+Flask provides a `render_template()` function that allows the use of *Jinja template engine*. 
+This will make managing HTML much easier by writing your HTML code in `.html` files as well as
+using logic in your HTML code.
+
+For this, in our web app directory, we first need to create the `templates` directory where all your `.html` files are gonna
+reside. The reason for that is that when calling the function `render_template()`, you will need to
+pass as an argument the name of the HTML file.
+
+```python
+@app.route('/')
+def hello():
+    return render_template('index_hello.html', title='Hello', message='This is a simple flask webapp')
+```
+
+And Flask will look for that file in the `templates` folder in your web app directory.
+
+In addition to the `templates` folder, Flask Web Applications also typically have a static folder 
+for hosting static files, such as, JavaScript files, CSS files and images the application uses.
+
+So for this, we are gonna create a `static` folder inside of our app folder, and inside we are gonna create
+a `css` folder to host all the `.css` files. This is typically done to organize static files in 
+dedicated folders, as such, JavaScript files usually reside in a directory called `js`, images are
+put inside the `imgs` folder, and so on.
+
+As someone would think, when creating new html files, you would repeat a lot of unneccessary code
+in the HTML files, for that we can make use of a *base template file* which all of the HTML files
+will inherit from. We are gonna make use of *Jinja template engine* . You can check the 
+[base_hello.html](/templates/base_hello.html) and [index_hello.html](/templates/index_hello.html), to
+follow along.
+
+
+The main specific thing of Jinja engine are:
+- `{% block title %} {% endblock %}` Is a block that serves as a place holder for a title, it's used
+so that every template has a custom title without rewriting the entire head section each time.
+- `{{ url_for('index')}}` A function that will return the index() view function.
+- `{% block content %} {% endblock %}` Another block that will be replaced by content depending on the 
+children template used.
+
+And for the moment that's all we will be touching, now we are gonna containerize the application, 
+and run the container to see how docker works.
