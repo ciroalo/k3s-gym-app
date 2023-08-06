@@ -56,3 +56,27 @@ sudo docker run hello-world
 This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
 
 With this we will have succesfully installe docker.
+
+## Run Docker without sudo
+If you don't want to preface the `docker` command with sudo, create a Unix group called `docker` and add users to it. When the Docker Daemon starts, it creates a Unix sock accesible by members of the `docker` group. On some Linux distributions, the system automatically does it for you. In that case there's no need for you to manually create the group.
+
+To create the `docker` group and add your user:
+1. Create the docker group:
+```bash
+sudo groupadd docker
+```
+
+2. Add your user to the `docker` group:
+```bash
+sudo usermod -aG docker $USER
+```
+
+3. Log out and log back in for changes to be instated or run the following command:
+```bash
+newgrp docker
+```
+
+4. Verify that is working with the following command from before:
+```bash
+docker run hello-world
+```
