@@ -1,5 +1,5 @@
 # Use the same python version that I am using in my environment
-FROM python:3.10
+FROM python:3.10-slim-buster
 
 # Set the working directory in the container
 WORKDIR /app
