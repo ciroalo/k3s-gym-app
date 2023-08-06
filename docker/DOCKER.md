@@ -80,3 +80,45 @@ newgrp docker
 ```bash
 docker run hello-world
 ```
+
+## Publishing image to Docker Hub
+After building our first image `simple-flask-app` we are able to share it on Docker Hub. Docker Hub is a
+service that provides a repository for storing and sharing Docker images. This will be later useful
+when selecting the image in yaml file.
+
+If you don't have an account, you can create a [Docker ID](https://hub.docker.com/signup) for free if you 
+don't have one.
+
+### Create a new repository
+To push an image, first you need to create a repository on Docker Hub for it.
+
+1. Sign up or Sign in to Docker Hub.
+
+2. Select the **Create Repository** button. 
+
+3. For the repo name, use the same you were using for your docker image. Make sure the visibility is `Public`.
+
+4. Click the **create** button.
+
+
+### Push the image
+
+1. Login to the Docker Hub through the terminal using the command.
+```bash
+docker login -u <user-name>
+```
+
+2. User the `docker tag` command to give the `simple-flask-app` image a new name. Because my docker username is **ciroalonso** in my case it looks like this.
+
+```bash
+docker tag simple-flask-app ciroalonso/simple-flask-app
+```
+
+3. Push the image to the repository.
+
+```bash
+docker push ciroalonso/simple-flask-app
+```
+
+And with this we will have the image available in the cloud.
+You can also add a tag to do version control, in our case, because we didn't add a version, it will have the `latest` tag, which is the tag by default.
