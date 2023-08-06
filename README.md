@@ -6,9 +6,8 @@ Contents
 ---
   * [Preface](#preface)
   * [Server](#server)
-  * [Docker](#docker)
   * [App](#app)
-  
+  * [Docker](#docker)
 
 <div id='preface'/>
 
@@ -292,12 +291,6 @@ To finish, we will have to log out of the ssh session as the root user, and
 start a new one with the new user created.
 
 
-<div id='docker'/>
-
-## Docker
-To containeraze the application in kubernetes, we are gonna use Docker. For that we need to create a Dockerfile. 
-
-
 
 <div id='app'/>
 
@@ -438,3 +431,33 @@ children template used.
 
 And for the moment that's all we will be touching, now we are gonna containerize the application, 
 and run the container to see how docker works.
+
+
+<div id='docker'/>
+
+## Docker
+A container is a standard unit of softwarethat packages code and all it's dependencies so the application runs quickly and reliably from one computing environment to another.
+
+With a container we can launch an image in the server that doesn't matter the hardware specifications, it's gonna be able to run eficiently.
+
+If you don't have it installed yet, go to the docker folder and follow the instructions to install.
+
+First we need an OS as a base, in our case we are gonna use `python:3.10-slim`. This one has all the python essential packages and libraries, it's lightweight with a smaller footprint for the 3.10 version. It's a suitable option for production use when you want to keep the image size small.
+
+### Create container image
+To create the container image, we are gonna run the following command:
+
+```bash
+docker build -t simple-flask-app .
+```
+
+This is for our case of the simple flask app that only contains a hello world message.
+
+
+
+### Run container
+To run the container we previously created, we are gonna run the following command:
+
+```bash
+docker run simple-flask-app
+```
