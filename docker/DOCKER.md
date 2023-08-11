@@ -122,3 +122,17 @@ docker push ciroalonso/simple-flask-app
 
 And with this we will have the image available in the cloud.
 You can also add a tag to do version control, in our case, because we didn't add a version, it will have the `latest` tag, which is the tag by default.
+
+
+### Port Binding
+An application inside a container runs in an isolated Docker network. At the same time, when you create or run a container, the container doesn't expose any of it's port to the outside world by default. We need to expose the container por to the host using the `--publish` or `-p` flag, with the format `-p <host_port>:<container_port>` to make a port available to services outside of Docker. This creates a firewall rule in the host, mapping a container port to a port on the DOcker host to the outside world.
+
+In the case of the `simple-flask-app`, because the default port for Flask is 5000, we are exposing the port 5000 in the Docker container, and then mapping the Docker port 5000 to our port 9000 in the following command.
+
+```bash
+docker run -p 9000:5000 simple-flask-app
+```
+
+Now we can access the `simple-flask-app` by accessing *localhost:9000* in our computer browser.
+
+It's standard to use the same port on your host as container is using, but it's not requiered.
