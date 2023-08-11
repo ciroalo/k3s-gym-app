@@ -442,7 +442,7 @@ With a container we can launch an image in the server that doesn't matter the ha
 
 If you don't have it installed yet, go to the docker folder and follow the instructions to install.
 
-First we need an OS as a base, in our case we are gonna use `python:3.10-slim`. This one has all the python essential packages and libraries, it's lightweight with a smaller footprint for the 3.10 version. It's a suitable option for production use when you want to keep the image size small.
+First we need an OS as a base, in our case we are gonna use `python:3.10-slim-buster`. This one has all the python essential packages and libraries, it's lightweight with a smaller footprint for the 3.10 version. It's a suitable option for production use when you want to keep the image size small and you are only gonna use python. If not, the standard is recommended.
 
 ### Create container image
 To create the container image, we are gonna run the following command:
